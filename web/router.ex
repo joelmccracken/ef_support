@@ -1,5 +1,6 @@
 defmodule EfSupport.Router do
   use EfSupport.Web, :router
+  use Addict.RoutesHelper
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -19,6 +20,10 @@ defmodule EfSupport.Router do
     get "/", PageController, :index
 
     resources "/tasks", TaskController
+  end
+
+  scope "/" do
+    addict :routes
   end
 
   # Other scopes may use custom stacks.
