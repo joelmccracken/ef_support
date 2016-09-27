@@ -25,3 +25,13 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+config :addict,
+  secret_key: System.get_env("ADDICT_SECRET_KEY"),
+  extra_validation: fn ({valid, errors}, user_params) -> {valid, errors} end, # define extra validation here
+  user_schema: EfSupport.User,
+  repo: EfSupport.Repo,
+  from_email: "somedude@somewebsite.com",
+  mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
+  mailgun_key: System.get_env("MAILGUN_API_KEY"),
+  mail_service: :mailgun

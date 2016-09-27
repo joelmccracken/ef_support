@@ -38,6 +38,7 @@ defmodule EfSupport.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:addict, "~> 0.3"},
+     {:poison, "~> 2.1", override: true},
      {:cowboy, "~> 1.0"}]
   end
 
