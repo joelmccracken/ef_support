@@ -8,7 +8,8 @@
     <%= for task <- @incomplete do %>
         <li>
             <%= task.name %>
-            <%= form_for EfSupport.Task.changeset(task.task), task_path(@conn, :update, task.task), fn f -> %>
+            <%= form_for task.mark_complete, task_path(@conn, :update, task.task), fn f -> %>
+              <%= hidden_input f, :complete, [{:value, 1}] %>
               <%= submit "Complete", class: "btn btn-primary" %>
             <% end %>
 
@@ -27,6 +28,10 @@
     <%= for task <- @complete do %>
         <li>
             <%= task.name %>
+            <%= form_for task.mark_complete, task_path(@conn, :update, task.task), fn f -> %>
+              <%= hidden_input f, :complete, [{:value, 0}] %>
+              <%= submit "Mark Incomplete", class: "btn btn-primary" %>
+            <% end %>
         </li>
     <% end %>
 </ul>

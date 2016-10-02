@@ -4,8 +4,7 @@ defmodule EfSupport.TaskView do
   require IEx
 
   def render("task_list.html", %{tasks: tasks, conn: conn}) do
-
-    calced_completion = Enum.map(tasks, fn(task) -> %{name: task.name, complete: task.complete > 0, id: task.id, task: task}  end)
+    calced_completion = Enum.map(tasks, &calculate_completion/1)
 
     is_complete = fn(calculated)-> calculated.complete end
 
@@ -15,6 +14,17 @@ defmodule EfSupport.TaskView do
     render("task_list.html", %{complete: complete, incomplete: incomplete, conn: conn})
   end
 
-  def incomplete(assigns) do
+  def calculate_completion(task) do
+    changes = Ecto.Changeset.change(task, %{complete: 1})
+    %{
+      name: task.name,
+      complete: task.complete > 0,
+      id: task.id,
+      task: task,
+      mark_complete: changes
+    }
+  end
+
+  def boolean_toggle_form(decorated_task) do
   end
 end
