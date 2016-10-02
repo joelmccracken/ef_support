@@ -1,0 +1,32 @@
+<h2>Listing tasks</h2>
+
+<%= link "New task", to: task_path(@conn, :new) %>
+
+<h3>Active</h3>
+
+<ul>
+    <%= for task <- @incomplete do %>
+        <li>
+            <%= task.name %>
+            <%= form_for EfSupport.Task.changeset(task.task), task_path(@conn, :update, task.task), fn f -> %>
+              <%= submit "Complete", class: "btn btn-primary" %>
+            <% end %>
+
+            <%= link "Show", to: task_path(@conn, :show, task.task), class: "btn btn-default btn-xs" %>
+            <%= link "Edit", to: task_path(@conn, :edit, task.task), class: "btn btn-default btn-xs" %>
+            <%= link "Delete", to: task_path(@conn, :delete, task.task), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        </li>
+    <% end %>
+</ul>
+
+
+
+<h3>Completed</h3>
+
+<ul>
+    <%= for task <- @complete do %>
+        <li>
+            <%= task.name %>
+        </li>
+    <% end %>
+</ul>

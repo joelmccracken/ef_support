@@ -1,11 +1,13 @@
 defmodule EfSupport.TaskController do
   use EfSupport.Web, :controller
 
-  alias EfSupport.Task
+  alias EfSupport.{Task,User}
+
+  plug Addict.Plugs.Authenticated
 
   def index(conn, _params) do
-    tasks = Repo.all(Task)
-    render(conn, "index.html", tasks: tasks)
+    user = current_user(conn) |> Repo.preload([:tasks])
+    render(conn, "task_list.html", tasks: user.tasks)
   end
 
   def new(conn, _params) do
@@ -15,6 +17,7 @@ defmodule EfSupport.TaskController do
 
   def create(conn, %{"task" => task_params}) do
     changeset = Task.changeset(%Task{}, task_params)
+      |> Ecto.Changeset.change(%{ user_id: current_user(conn).id})
 
     case Repo.insert(changeset) do
       {:ok, _task} ->

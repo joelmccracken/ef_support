@@ -36,6 +36,13 @@ defmodule EfSupport.Web do
 
       import EfSupport.Router.Helpers
       import EfSupport.Gettext
+
+      def current_user(conn) do
+        Map.merge(
+          %EfSupport.User{},
+          Addict.Helper.current_user(conn)
+        )
+      end
     end
   end
 

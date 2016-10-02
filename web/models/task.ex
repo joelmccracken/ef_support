@@ -5,6 +5,7 @@ defmodule EfSupport.Task do
     field :name, :string
     field :complete, :integer
 
+    belongs_to :user, HelloPhoenix.User
     timestamps()
   end
 

@@ -5,6 +5,7 @@ defmodule EfSupport.User do
     field :email, :string
     field :encrypted_password, :string
 
+    has_many :tasks, EfSupport.Task
     timestamps()
   end
 
