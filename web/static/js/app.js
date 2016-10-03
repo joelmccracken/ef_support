@@ -21,9 +21,7 @@ import "phoenix_html"
 // import socket from "./socket"
 
 $(function(){
-    $("#elm-game").each(function(i, el){
-        elm = Elm.Main.embed(el, {
-            id: $(el).data('id')
-        });
+    $("#elm-app").each(function(i, el){
+        var elm = Elm.Main.embed(el);
     });
 });
