@@ -1,0 +1,23 @@
+<h2>Show open loop</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @open_loop.name %>
+  </li>
+
+  <li>
+    <strong>Complete:</strong>
+    <%= @open_loop.complete %>
+  </li>
+
+  <li>
+    <strong>User:</strong>
+    <%= @open_loop.user_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: open_loop_path(@conn, :edit, @open_loop) %>
+<%= link "Back", to: open_loop_path(@conn, :index) %>

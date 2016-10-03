@@ -20,6 +20,8 @@ defmodule EfSupport.Router do
     get "/", PageController, :index
 
     resources "/tasks", TaskController
+
+    resources "/open_loops", OpenLoopController
   end
 
   scope "/" do

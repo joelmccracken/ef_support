@@ -1,0 +1,6 @@
+<h2>Edit open loop</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: open_loop_path(@conn, :update, @open_loop) %>
+
+<%= link "Back", to: open_loop_path(@conn, :index) %>

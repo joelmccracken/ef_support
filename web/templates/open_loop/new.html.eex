@@ -1,0 +1,6 @@
+<h2>New open loop</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: open_loop_path(@conn, :create) %>
+
+<%= link "Back", to: open_loop_path(@conn, :index) %>

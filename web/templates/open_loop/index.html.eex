@@ -1,0 +1,30 @@
+<h2>Listing open loops</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Complete</th>
+      <th>User</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for open_loop <- @open_loops do %>
+    <tr>
+      <td><%= open_loop.name %></td>
+      <td><%= open_loop.complete %></td>
+      <td><%= open_loop.user_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: open_loop_path(@conn, :show, open_loop), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: open_loop_path(@conn, :edit, open_loop), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: open_loop_path(@conn, :delete, open_loop), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New open loop", to: open_loop_path(@conn, :new) %>
