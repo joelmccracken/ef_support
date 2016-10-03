@@ -13,8 +13,14 @@
 
   <body>
     <div class="container">
-      <a href="<%= task_path @conn, :index %>">tasks</a>
-      <a href="<%= login_path @conn, :login %>">login</a>
+      <%= if !(logged_in?(@conn)) do %>
+        <a href="<%= login_path @conn, :login %>">login</a> |
+        <a href="<%= register_path @conn, :register %>">register</a>
+      <%= else %>
+        ur logged in
+
+        <a href="<%= logout_path @conn, :logout %>">logout</a>
+      <% end %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 

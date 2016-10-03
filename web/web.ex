@@ -35,14 +35,9 @@ defmodule EfSupport.Web do
       import Ecto.Query
 
       import EfSupport.Router.Helpers
+      import EfSupport.UserHelpers
       import EfSupport.Gettext
 
-      def current_user(conn) do
-        Map.merge(
-          %EfSupport.User{},
-          Addict.Helper.current_user(conn)
-        )
-      end
     end
   end
 
@@ -59,6 +54,7 @@ defmodule EfSupport.Web do
       import EfSupport.Router.Helpers
       import EfSupport.ErrorHelpers
       import EfSupport.Gettext
+      import EfSupport.UserHelpers
     end
   end
 
