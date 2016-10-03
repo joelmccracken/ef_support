@@ -18,6 +18,7 @@ defmodule EfSupport.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/app", PageController, :app
 
     resources "/tasks", TaskController
 
