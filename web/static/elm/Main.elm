@@ -35,38 +35,30 @@ type alias Model =
 
 type alias Task = { name : String, id : Int, complete : Int}
 
+
+completeTask : Int -> Model -> Model
+completeTask id model = model
+
+
+completeTasks : Model -> List Task
+completeTasks model =
+    List.filter (\t-> t.complete > 0) model.tasks
+
+
 init : Params -> (Model, Cmd Msg)
 init params =
     (Model params [] "", fetchBootstrap params.appDataUrl)
 
 
-fetchBootstrap : String -> Cmd Msg
-fetchBootstrap url =
-    Task.perform
-      FetchFail
-      BootstrapFetchSucceed
-      (Http.get decodeBootstrap url)
-
-
-decodeBootstrap : Json.Decoder (List Task)
-decodeBootstrap =
-    Json.at ["data", "tasks"] (Json.list decodeTask)
-
-decodeTask =
-    Json.object3
-        Task
-        ("name" := Json.string)
-        ("id" := Json.int)
-        ("complete" := Json.int)
 
 -- UPDATE
-
 
 type Msg
   = MorePlease
   | BootstrapFetchSucceed (List Task)
   | FetchSucceed String
   | FetchFail Http.Error
+  | TaskComplete Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -82,11 +74,12 @@ update msg model =
 
     BootstrapFetchSucceed data ->
       -- (Model model.topic newUrl, Cmd.none)
-      ((Debug.log "Model: " { model | tasks = data }), Cmd.none)
+      ({ model | tasks = data }, Cmd.none)
 
     FetchFail x ->
       ({ model | output = Debug.log "fail" (toString x)}, Cmd.none)
 
+    TaskComplete id -> (completeTask id model, Cmd.none)
 
 -- VIEW
 
@@ -94,16 +87,21 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ h2 [] [] --[text model.topic]
-    , button [ onClick MorePlease ] [ text "More Please!" ]
-    , br [] []
-    , img [] [] --[src model.gifUrl] []
+    [ h2 [] [ text "Tasks"]
+    , ul [] <| List.map viewTask model.tasks
     ]
 
 
+viewTask : Task -> Html Msg
+viewTask task =
+    li []
+       [ text task.name
+       , button [(onClick (TaskComplete task.id))] []
+
+       ]
+
 
 -- SUBSCRIPTIONS
-
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -114,15 +112,21 @@ subscriptions model =
 -- HTTP
 
 
-getRandomGif : String -> Cmd Msg
-getRandomGif topic =
-  let
-    url =
-      "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ topic
-  in
-    Task.perform FetchFail FetchSucceed (Http.get decodeGifUrl url)
+fetchBootstrap url =
+    Task.perform
+      FetchFail
+      BootstrapFetchSucceed
+      (Http.get decodeBootstrap url)
 
 
-decodeGifUrl : Json.Decoder String
-decodeGifUrl =
-  Json.at ["data", "image_url"] Json.string
+decodeBootstrap : Json.Decoder (List Task)
+decodeBootstrap =
+    Json.at ["data", "tasks"] (Json.list decodeTask)
+
+
+decodeTask =
+    Json.object3
+        Task
+        ("name" := Json.string)
+        ("id" := Json.int)
+        ("complete" := Json.int)
