@@ -23,6 +23,8 @@ defmodule EfSupport.Router do
     resources "/tasks", TaskController
 
     resources "/open_loops", OpenLoopController
+
+    get "/api/bootstrap", APIController, :bootstrap
   end
 
   scope "/" do

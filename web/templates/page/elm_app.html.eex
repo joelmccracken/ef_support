@@ -1,1 +1,5 @@
+<script>
+ window.efSupport.bootstrapURL = "<%= api_path(@conn, :bootstrap) %>";
+</script>
+
 <div id="elm-app"></div>

@@ -4,8 +4,9 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
 import Json.Decode as Json
+import Json.Decode exposing ((:=))
 import Task
-
+import Debug
 
 type alias Params =
     { appDataUrl : String}
@@ -26,23 +27,44 @@ main =
 
 
 type alias Model =
-  {
-  params : Params
+  { params : Params
+  , tasks : List Task
+  , output : String
   }
 
 
+type alias Task = { name : String, id : Int, complete : Int}
+
 init : Params -> (Model, Cmd Msg)
 init params =
-    (Model params, Cmd.none)
+    (Model params [] "", fetchBootstrap params.appDataUrl)
 
 
+fetchBootstrap : String -> Cmd Msg
+fetchBootstrap url =
+    Task.perform
+      FetchFail
+      BootstrapFetchSucceed
+      (Http.get decodeBootstrap url)
 
+
+decodeBootstrap : Json.Decoder (List Task)
+decodeBootstrap =
+    Json.at ["data", "tasks"] (Json.list decodeTask)
+
+decodeTask =
+    Json.object3
+        Task
+        ("name" := Json.string)
+        ("id" := Json.int)
+        ("complete" := Json.int)
 
 -- UPDATE
 
 
 type Msg
   = MorePlease
+  | BootstrapFetchSucceed (List Task)
   | FetchSucceed String
   | FetchFail Http.Error
 
@@ -51,16 +73,19 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     MorePlease ->
-      (model, Cmd.none)
       -- (model, getRandomGif model.topic)
+      (model, Cmd.none)
 
     FetchSucceed newUrl ->
-      (model, Cmd.none)
       -- (Model model.topic newUrl, Cmd.none)
-
-    FetchFail _ ->
       (model, Cmd.none)
 
+    BootstrapFetchSucceed data ->
+      -- (Model model.topic newUrl, Cmd.none)
+      ((Debug.log "Model: " { model | tasks = data }), Cmd.none)
+
+    FetchFail x ->
+      ({ model | output = Debug.log "fail" (toString x)}, Cmd.none)
 
 
 -- VIEW

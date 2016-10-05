@@ -9,6 +9,7 @@
 
     <title>Hello EfSupport!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script> window.efSupport = {}; </script>
   </head>
 
   <body>
@@ -18,7 +19,7 @@
         <a href="<%= register_path @conn, :register %>">register</a>
       <%= else %>
         ur logged in
-
+        <a href="<%= page_path @conn, :app %>">app</a> |
         <a href="<%= logout_path @conn, :logout %>">logout</a>
       <% end %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
