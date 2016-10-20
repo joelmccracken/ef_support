@@ -8,8 +8,11 @@ import Json.Decode exposing ((:=))
 import Task
 import Debug
 
+
+
 type alias Params =
     { appDataUrl : String}
+
 
 
 main : Program (Params)
@@ -25,7 +28,6 @@ main =
 
 -- MODEL
 
-
 type alias Model =
   { params : Params
   , tasks : List Task
@@ -33,12 +35,16 @@ type alias Model =
   }
 
 
+
 type alias Task = { name : String, id : Int, complete : Int}
+
 
 
 completeTask : Int -> Model -> Model
 completeTask id model =
   updateTask id model (\task-> { task | complete = 1 })
+
+
 
 updateTask : Int -> Model -> (Task -> Task) -> Model
 updateTask id model updater =
@@ -47,6 +53,7 @@ updateTask id model updater =
               model.tasks)
   in
     { model | tasks = tasks }
+
 
 
 incompleteTask : Int -> Model -> Model
@@ -72,6 +79,7 @@ type Msg
   | MarkIncomplete Int
 
 
+
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
@@ -94,10 +102,13 @@ update msg model =
 
     MarkIncomplete id -> (incompleteTask id model, Cmd.none)
 
+
+
 isMarkComplete task = task.complete > 0
 
--- VIEW
 
+
+-- VIEW
 
 view : Model -> Html Msg
 view model =
@@ -112,6 +123,7 @@ view model =
     ]
 
 
+
 viewTask : Task -> Html Msg
 viewTask task =
     li []
@@ -120,12 +132,15 @@ viewTask task =
        ] ++ buttonsForTask task)
 
 
+
 buttonsForTask : Task -> List (Html Msg)
 buttonsForTask task =
   if task.complete > 0 then
     [ button [(onClick (MarkIncomplete task.id))] [ text "Incomplete" ]]
   else
     [ button [(onClick (MarkComplete task.id))] [ text "Complete" ]]
+
+
 
 -- SUBSCRIPTIONS
 
@@ -137,22 +152,23 @@ subscriptions model =
 
 -- HTTP
 
-
 fetchBootstrap url =
-    Task.perform
-      FetchFail
-      BootstrapFetchSucceed
-      (Http.get decodeBootstrap url)
+  Task.perform
+    FetchFail
+    BootstrapFetchSucceed
+    (Http.get decodeBootstrap url)
+
 
 
 decodeBootstrap : Json.Decoder (List Task)
 decodeBootstrap =
-    Json.at ["data", "tasks"] (Json.list decodeTask)
+  Json.at ["data", "tasks"] (Json.list decodeTask)
+
 
 
 decodeTask =
-    Json.object3
-        Task
-        ("name" := Json.string)
-        ("id" := Json.int)
-        ("complete" := Json.int)
+  Json.object3
+    Task
+    ("name" := Json.string)
+    ("id" := Json.int)
+    ("complete" := Json.int)
