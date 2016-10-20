@@ -8,8 +8,8 @@ defmodule EfSupport.TaskView do
 
     is_complete = fn(calculated)-> calculated.complete end
 
-    complete = calced_completion |> Enum.filter is_complete
-    incomplete = calced_completion |> Enum.reject is_complete
+    complete = calced_completion |> Enum.filter(is_complete)
+    incomplete = calced_completion |> Enum.reject(is_complete)
 
     render("task_list.html", %{complete: complete, incomplete: incomplete, conn: conn})
   end
