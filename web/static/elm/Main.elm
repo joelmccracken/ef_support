@@ -37,17 +37,27 @@ type alias Task = { name : String, id : Int, complete : Int}
 
 
 completeTask : Int -> Model -> Model
-completeTask id model = model
+completeTask id model =
+  updateTask id model (\task-> { task | complete = 1 })
+
+updateTask : Int -> Model -> (Task -> Task) -> Model
+updateTask id model updater =
+  let
+    tasks = (List.map (\task-> if task.id == id then (updater task) else task)
+              model.tasks)
+  in
+    { model | tasks = tasks }
 
 
-completeTasks : Model -> List Task
-completeTasks model =
-    List.filter (\t-> t.complete > 0) model.tasks
+incompleteTask : Int -> Model -> Model
+incompleteTask id model =
+  updateTask id model (\task-> {task | complete = 0 })
+
 
 
 init : Params -> (Model, Cmd Msg)
 init params =
-    (Model params [] "", fetchBootstrap params.appDataUrl)
+  (Model params [] "", fetchBootstrap params.appDataUrl)
 
 
 
@@ -58,7 +68,8 @@ type Msg
   | BootstrapFetchSucceed (List Task)
   | FetchSucceed String
   | FetchFail Http.Error
-  | TaskComplete Int
+  | MarkComplete Int
+  | MarkIncomplete Int
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -79,27 +90,42 @@ update msg model =
     FetchFail x ->
       ({ model | output = Debug.log "fail" (toString x)}, Cmd.none)
 
-    TaskComplete id -> (completeTask id model, Cmd.none)
+    MarkComplete id -> (completeTask id model, Cmd.none)
+
+    MarkIncomplete id -> (incompleteTask id model, Cmd.none)
+
+isMarkComplete task = task.complete > 0
 
 -- VIEW
 
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ h2 [] [ text "Tasks"]
-    , ul [] <| List.map viewTask model.tasks
+  let
+    complete   = List.filter isMarkComplete model.tasks
+    incomplete = List.filter (not << isMarkComplete) model.tasks
+  in div []
+    [ h2 [] [ text "complete"]
+    , ul [] <| List.map viewTask complete
+    , h2 [] [ text "incomplete"]
+    , ul [] <| List.map viewTask incomplete
     ]
 
 
 viewTask : Task -> Html Msg
 viewTask task =
     li []
-       [ text task.name
-       , button [(onClick (TaskComplete task.id))] []
+       ([ text task.name
+       , text <| toString task.complete
+       ] ++ buttonsForTask task)
 
-       ]
 
+buttonsForTask : Task -> List (Html Msg)
+buttonsForTask task =
+  if task.complete > 0 then
+    [ button [(onClick (MarkIncomplete task.id))] [ text "Incomplete" ]]
+  else
+    [ button [(onClick (MarkComplete task.id))] [ text "Complete" ]]
 
 -- SUBSCRIPTIONS
 
