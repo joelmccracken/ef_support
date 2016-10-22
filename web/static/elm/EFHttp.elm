@@ -1,26 +1,27 @@
 module EFHttp exposing (..)
 import Http
-import Json.Decode as Json
+import Json.Decode as JSD
 import Json.Decode exposing ((:=))
+import Json.Encode as JSE
 import Task
 import Model exposing (Task, Model)
 import Msg exposing (Msg(..))
 
 
 
-updateTaskAttributes : Task -> Cmd Msg
-updateTaskAttributes csrfToken task =
+updateTask : String -> String -> Task -> Cmd Msg
+updateTask csrfToken updateTaskUrl task =
   let
     multipartData
-      = [ Http.stringData "name" name
+      = [ Http.stringData "task_data" <| JSE.encode 2 <| encodeTask task
         , Http.stringData "_csrf_token" csrfToken]
     httpData = Http.multipart multipartData
   in Task.perform
     FetchFail
     TaskCreated
     (Http.post
-      (Json.at ["data", "task"] decodeTask)
-
+      (JSD.at ["data", "task"] decodeTask)
+      ""
       httpData
     )
 
@@ -37,7 +38,7 @@ submitNewTask createUrl csrfToken name =
     FetchFail
     TaskCreated
     (Http.post
-      (Json.at ["data", "task"] decodeTask)
+      (JSD.at ["data", "task"] decodeTask)
       createUrl
       httpData
     )
@@ -53,16 +54,24 @@ fetchBootstrap url =
 
 
 
-decodeBootstrap : Json.Decoder (List Task)
+decodeBootstrap : JSD.Decoder (List Task)
 decodeBootstrap =
-  Json.at ["data", "tasks"] (Json.list decodeTask)
+  JSD.at ["data", "tasks"] (JSD.list decodeTask)
 
 
 
-decodeTask : Json.Decoder Task
+decodeTask : JSD.Decoder Task
 decodeTask =
-  Json.object3
+  JSD.object3
     Task
-    ("name"     := Json.string)
-    ("id"       := Json.int)
-    ("complete" := Json.int)
+    ("name"     := JSD.string)
+    ("id"       := JSD.int)
+    ("complete" := JSD.int)
+
+encodeTask : Task -> JSE.Value
+encodeTask task =
+  JSE.object
+    [ ( "name",     JSE.string task.name )
+    , ( "id",       JSE.int task.id )
+    , ( "complete", JSE.int task.complete )
+    ]
