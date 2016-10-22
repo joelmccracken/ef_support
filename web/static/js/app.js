@@ -22,6 +22,6 @@ import "phoenix_html"
 
 $(function(){
     $("#elm-app").each(function(i, el){
-        var elm = Elm.Main.embed(el, {appDataUrl: window.efSupport.bootstrapURL});
+        var elm = Elm.Main.embed(el, window.efSupport.appOptions);
     });
 });

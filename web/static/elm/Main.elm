@@ -2,16 +2,11 @@ import Html exposing (..)
 import Html.App as App
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import Http
-import Json.Decode as Json
-import Json.Decode exposing ((:=))
-import Task
 import Debug
+import EFHttp as EFHttp
+import Msg exposing (Msg(..))
+import Model exposing (Model, Task, incompleteTask, completeTask, Params)
 
-
-
-type alias Params =
-    { appDataUrl : String}
 
 
 
@@ -26,59 +21,13 @@ main =
 
 
 
--- MODEL
-
-type alias Model =
-  { params : Params
-  , tasks : List Task
-  , output : String
-  }
-
-
-
-type alias Task = { name : String, id : Int, complete : Int}
-
-
-
-completeTask : Int -> Model -> Model
-completeTask id model =
-  updateTask id model (\task-> { task | complete = 1 })
-
-
-
-updateTask : Int -> Model -> (Task -> Task) -> Model
-updateTask id model updater =
-  let
-    tasks = (List.map (\task-> if task.id == id then (updater task) else task)
-              model.tasks)
-  in
-    { model | tasks = tasks }
-
-
-
-incompleteTask : Int -> Model -> Model
-incompleteTask id model =
-  updateTask id model (\task-> {task | complete = 0 })
-
-
-
 init : Params -> (Model, Cmd Msg)
 init params =
-  (Model params [] "", fetchBootstrap params.appDataUrl)
+  (Model params [] "" "", EFHttp.fetchBootstrap params.appDataUrl)
 
 
 
 -- UPDATE
-
-type Msg
-  = MorePlease
-  | BootstrapFetchSucceed (List Task)
-  | FetchSucceed String
-  | FetchFail Http.Error
-  | MarkComplete Int
-  | MarkIncomplete Int
-
-
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -87,9 +36,9 @@ update msg model =
       -- (model, getRandomGif model.topic)
       (model, Cmd.none)
 
-    FetchSucceed newUrl ->
-      -- (Model model.topic newUrl, Cmd.none)
-      (model, Cmd.none)
+    -- FetchSucceed newUrl ->
+    --   -- (Model model.topic newUrl, Cmd.none)
+    --   (model, Cmd.none)
 
     BootstrapFetchSucceed data ->
       -- (Model model.topic newUrl, Cmd.none)
@@ -102,8 +51,22 @@ update msg model =
 
     MarkIncomplete id -> (incompleteTask id model, Cmd.none)
 
+    UpdateNewTask str -> ({ model | newTaskText = str }, Cmd.none)
+
+    AcceptNewTask ->
+      let
+        newTask = model.newTaskText
+        clearedNewTask = { model | newTaskText = "" }
+        createCmd = EFHttp.submitNewTask model.params.createTaskUrl model.params.csrfToken newTask
+      in
+        (clearedNewTask, createCmd)
+
+    TaskCreated task ->
+      ({ model | tasks = task :: model.tasks }, Cmd.none)
 
 
+
+isMarkComplete : Task -> Bool
 isMarkComplete task = task.complete > 0
 
 
@@ -116,10 +79,12 @@ view model =
     complete   = List.filter isMarkComplete model.tasks
     incomplete = List.filter (not << isMarkComplete) model.tasks
   in div []
-    [ h2 [] [ text "complete"]
-    , ul [] <| List.map viewTask complete
+    [ input [ onInput UpdateNewTask, value model.newTaskText ] [ ]
+    , button [ onClick AcceptNewTask ] [ text "Accept" ]
     , h2 [] [ text "incomplete"]
     , ul [] <| List.map viewTask incomplete
+    , h2 [] [ text "complete"]
+    , ul [] <| List.map viewTask complete
     ]
 
 
@@ -147,28 +112,3 @@ buttonsForTask task =
 subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.none
-
-
-
--- HTTP
-
-fetchBootstrap url =
-  Task.perform
-    FetchFail
-    BootstrapFetchSucceed
-    (Http.get decodeBootstrap url)
-
-
-
-decodeBootstrap : Json.Decoder (List Task)
-decodeBootstrap =
-  Json.at ["data", "tasks"] (Json.list decodeTask)
-
-
-
-decodeTask =
-  Json.object3
-    Task
-    ("name" := Json.string)
-    ("id" := Json.int)
-    ("complete" := Json.int)
