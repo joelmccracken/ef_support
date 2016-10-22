@@ -13,7 +13,7 @@ updateTask : String -> String -> Task -> Cmd Msg
 updateTask csrfToken updateTaskUrl task =
   let
     multipartData
-      = [ Http.stringData "task_data" <| JSE.encode 2 <| encodeTask task
+      = [ Http.stringData "task_data" <| JSE.encode 0 <| encodeTask task
         , Http.stringData "_csrf_token" csrfToken]
     httpData = Http.multipart multipartData
   in Task.perform
@@ -21,7 +21,7 @@ updateTask csrfToken updateTaskUrl task =
     TaskCreated
     (Http.post
       (JSD.at ["data", "task"] decodeTask)
-      ""
+      updateTaskUrl
       httpData
     )
 
@@ -67,6 +67,8 @@ decodeTask =
     ("name"     := JSD.string)
     ("id"       := JSD.int)
     ("complete" := JSD.int)
+
+
 
 encodeTask : Task -> JSE.Value
 encodeTask task =

@@ -26,6 +26,7 @@ defmodule EfSupport.Router do
 
     get "/api/bootstrap", APIController, :bootstrap
     post "/api/create_task", APIController, :create_task
+    post "/api/update_task", APIController, :update_task
   end
 
   scope "/" do

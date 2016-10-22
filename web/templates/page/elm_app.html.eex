@@ -1,11 +1,12 @@
 <script>
 
  window.efSupport.appOptions = {
-   bootstrapURL:  "<%= api_path(@conn, :bootstrap) %>",
-   createTaskURL: "<%= api_path(@conn, :create_task) %>",
-   updateTaskURL: "<%= api_path(@conn, :update_task) %>",
-   csrfToken:     "<%= get_csrf_token() %>"
+   appBootstrapUrl: "<%= api_path(@conn, :bootstrap) %>",
+   createTaskUrl:   "<%= api_path(@conn, :create_task) %>",
+   updateTaskUrl:   "<%= api_path(@conn, :update_task) %>",
+   csrfToken:       "<%= get_csrf_token() %>"
  };
 </script>
+
 
 <div id="elm-app"></div>

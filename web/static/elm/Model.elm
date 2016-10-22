@@ -2,29 +2,33 @@ module Model exposing (..)
 
 
 type alias Params =
-    { appDataUrl : String
-    , createTaskUrl : String
-    , updateTaskUrl : String
-    , csrfToken : String
+    { appBootstrapUrl : String
+    , createTaskUrl :   String
+    , updateTaskUrl :   String
+    , csrfToken :       String
     }
 
 
 
 type alias Model =
-  { params : Params
-  , tasks : List Task
-  , output : String
+  { params :      Params
+  , tasks :       List Task
+  , output :      String
   , newTaskText : String
   }
 
 
+
 initialModel =
-  { params = { appDataUrl = "" }
+  { params = { appBootstrapUrl = ""
+             , createTaskUrl = ""
+             , updateTaskUrl = ""
+             , csrfToken = ""
+             }
   , tasks  = []
   , output = ""
   , newTaskText = ""
   }
-
 
 
 

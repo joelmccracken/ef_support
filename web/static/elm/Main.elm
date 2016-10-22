@@ -23,7 +23,7 @@ main =
 
 init : Params -> (Model, Cmd Msg)
 init params =
-  (Model params [] "" "", EFHttp.fetchBootstrap params.appDataUrl)
+  (Model params [] "" "", EFHttp.fetchBootstrap params.appBootstrapUrl)
 
 
 
