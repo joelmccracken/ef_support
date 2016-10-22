@@ -8,7 +8,7 @@ type Msg
   | TaskCreated Task
   | TaskUpdated Task
   | FetchFail Http.Error
-  | MarkComplete Int
-  | MarkIncomplete Int
+  | MarkComplete Task
+  | MarkIncomplete Task
   | UpdateNewTask String
   | AcceptNewTask

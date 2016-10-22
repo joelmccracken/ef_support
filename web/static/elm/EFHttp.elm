@@ -14,6 +14,7 @@ updateTask csrfToken updateTaskUrl task =
   let
     multipartData
       = [ Http.stringData "task_data" <| JSE.encode 0 <| encodeTask task
+        , Http.stringData "id" <| toString task.id
         , Http.stringData "_csrf_token" csrfToken]
     httpData = Http.multipart multipartData
   in Task.perform

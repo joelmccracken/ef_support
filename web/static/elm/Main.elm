@@ -6,7 +6,7 @@ import Debug
 import EFHttp as EFHttp
 import Msg exposing (Msg(..))
 import Model exposing (Model, Task, incompleteTask, completeTask, Params)
-
+import Model as M
 
 
 
@@ -38,9 +38,19 @@ update msg model =
     FetchFail x ->
       ({ model | output = Debug.log "fail" (toString x)}, Cmd.none)
 
-    MarkComplete id -> (completeTask id model, Cmd.none)
+    MarkComplete task ->
+      let
+        completedTask = M.markIndividualTaskComplete task
+        serverCmd = EFHttp.updateTask model.params.csrfToken model.params.updateTaskUrl completedTask
+      in
+        (completeTask task model, serverCmd)
 
-    MarkIncomplete id -> (incompleteTask id model, Cmd.none)
+    MarkIncomplete task ->
+      let
+        completedTask = M.markIndividualTaskIncomplete task
+        serverCmd = EFHttp.updateTask model.params.csrfToken model.params.updateTaskUrl completedTask
+      in
+        (incompleteTask task model, serverCmd)
 
     UpdateNewTask str -> ({ model | newTaskText = str }, Cmd.none)
 
@@ -102,9 +112,9 @@ viewTask task =
 buttonsForTask : Task -> List (Html Msg)
 buttonsForTask task =
   if task.complete > 0 then
-    [ button [(onClick (MarkIncomplete task.id))] [ text "Incomplete" ]]
+    [ button [(onClick (MarkIncomplete task))] [ text "Incomplete" ]]
   else
-    [ button [(onClick (MarkComplete task.id))] [ text "Complete" ]]
+    [ button [(onClick (MarkComplete task))] [ text "Complete" ]]
 
 
 

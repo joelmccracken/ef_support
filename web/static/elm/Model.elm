@@ -1,6 +1,7 @@
 module Model exposing (..)
 
 
+
 type alias Params =
     { appInitUrl : String
     , createTaskUrl :   String
@@ -36,22 +37,34 @@ type alias Task = { name : String, id : Int, complete : Int}
 
 
 
-completeTask : Int -> Model -> Model
-completeTask id model =
-  updateTask id model (\task-> { task | complete = 1 })
+markIndividualTaskComplete : Task -> Task
+markIndividualTaskComplete task =
+  { task | complete = 1 }
 
 
 
-updateTask : Int -> Model -> (Task -> Task) -> Model
-updateTask id model updater =
+markIndividualTaskIncomplete: Task -> Task
+markIndividualTaskIncomplete task =
+  { task | complete = 0 }
+
+
+
+completeTask : Task -> Model -> Model
+completeTask task model =
+  updateTask task model markIndividualTaskComplete
+
+
+
+incompleteTask : Task -> Model -> Model
+incompleteTask task model =
+  updateTask task model markIndividualTaskIncomplete
+
+
+
+updateTask : Task -> Model -> (Task -> Task) -> Model
+updateTask task model updater =
   let
-    tasks = (List.map (\task-> if task.id == id then (updater task) else task)
-              model.tasks)
+    tasks = (List.map (\t-> if task == t then (updater t) else t)
+                 model.tasks)
   in
     { model | tasks = tasks }
-
-
-
-incompleteTask : Int -> Model -> Model
-incompleteTask id model =
-  updateTask id model (\task-> {task | complete = 0 })
