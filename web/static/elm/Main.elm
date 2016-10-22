@@ -23,7 +23,7 @@ main =
 
 init : Params -> (Model, Cmd Msg)
 init params =
-  (Model params [] "" "", EFHttp.fetchBootstrap params.appBootstrapUrl)
+  (Model params [] "" "", EFHttp.fetchAppInit params.appInitUrl)
 
 
 
@@ -33,7 +33,6 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     AppDataFetchSucceed data ->
-      -- (Model model.topic newUrl, Cmd.none)
       ({ model | tasks = data }, Cmd.none)
 
     FetchFail x ->

@@ -3,7 +3,7 @@ defmodule EfSupport.APIView do
 
   require IEx
 
-  def render("bootstrap.json", %{tasks: tasks}) do
+  def render("app_init.json", %{tasks: tasks}) do
     tasks = Enum.map(tasks, &render_task/1)
 
     %{data: %{tasks: tasks}}

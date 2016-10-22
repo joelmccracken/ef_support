@@ -45,17 +45,17 @@ submitNewTask createUrl csrfToken name =
 
 
 
-fetchBootstrap : String -> Cmd Msg
-fetchBootstrap url =
+fetchAppInit : String -> Cmd Msg
+fetchAppInit url =
   Task.perform
     FetchFail
     AppDataFetchSucceed
-    (Http.get decodeBootstrap url)
+    (Http.get decodeAppInit url)
 
 
 
-decodeBootstrap : JSD.Decoder (List Task)
-decodeBootstrap =
+decodeAppInit : JSD.Decoder (List Task)
+decodeAppInit =
   JSD.at ["data", "tasks"] (JSD.list decodeTask)
 
 
