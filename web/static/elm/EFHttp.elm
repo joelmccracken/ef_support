@@ -18,7 +18,7 @@ updateTask csrfToken updateTaskUrl task =
     httpData = Http.multipart multipartData
   in Task.perform
     FetchFail
-    TaskCreated
+    TaskUpdated
     (Http.post
       (JSD.at ["data", "task"] decodeTask)
       updateTaskUrl

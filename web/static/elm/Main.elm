@@ -55,10 +55,20 @@ update msg model =
     TaskCreated task ->
       ({ model | tasks = task :: model.tasks }, Cmd.none)
 
+    TaskUpdated task ->
+      ({ model | tasks = replaceExistingTask task model.tasks }, Cmd.none)
 
 
 isMarkComplete : Task -> Bool
 isMarkComplete task = task.complete > 0
+
+
+
+replaceExistingTask : Task -> List Task -> List Task
+replaceExistingTask task existingTasks =
+  List.map
+      (\t-> if task.id == t.id then task else t)
+      existingTasks
 
 
 

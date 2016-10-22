@@ -4,9 +4,9 @@ import Model exposing (Task)
 import Http
 
 type Msg
-  = MorePlease
-  | AppDataFetchSucceed (List Task)
+  = AppDataFetchSucceed (List Task)
   | TaskCreated Task
+  | TaskUpdated Task
   | FetchFail Http.Error
   | MarkComplete Int
   | MarkIncomplete Int
