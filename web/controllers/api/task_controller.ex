@@ -1,7 +1,7 @@
 defmodule EfSupport.API.TaskController do
   use EfSupport.Web, :controller
 
-  alias EfSupport.API.Task
+  alias EfSupport.Task
 
   def index(conn, _params) do
     tasks = Repo.all(Task)

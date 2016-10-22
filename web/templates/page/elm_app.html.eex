@@ -2,8 +2,8 @@
 
  window.efSupport.appOptions = {
    appInitUrl:    "<%= api_path(@conn, :app_init) %>",
-   createTaskUrl: "<%= api_path(@conn, :create_task) %>",
-   updateTaskUrl: "<%= api_path(@conn, :update_task) %>",
+   createTaskUrl: "<%= task_path(@conn, :create) %>",
+   updateTaskUrl: "<%= task_path(@conn, :update) %>",
    csrfToken:     "<%= get_csrf_token() %>"
  };
 </script>

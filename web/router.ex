@@ -20,13 +20,13 @@ defmodule EfSupport.Router do
     get "/", PageController, :index
     get "/app", PageController, :app
 
-    resources "/tasks", TaskController
-
     resources "/open_loops", OpenLoopController
 
     get "/api/app_init", APIController, :app_init
     post "/api/create_task", APIController, :create_task
     post "/api/update_task", APIController, :update_task
+
+    resources "/api/tasks", API.TaskController, except: [:new, :edit]
   end
 
   scope "/" do
