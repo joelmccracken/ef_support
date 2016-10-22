@@ -49,7 +49,7 @@ fetchBootstrap : String -> Cmd Msg
 fetchBootstrap url =
   Task.perform
     FetchFail
-    BootstrapFetchSucceed
+    AppDataFetchSucceed
     (Http.get decodeBootstrap url)
 
 

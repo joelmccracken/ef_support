@@ -5,7 +5,7 @@ import Http
 
 type Msg
   = MorePlease
-  | BootstrapFetchSucceed (List Task)
+  | AppDataFetchSucceed (List Task)
   | TaskCreated Task
   | FetchFail Http.Error
   | MarkComplete Int

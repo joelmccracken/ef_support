@@ -32,15 +32,7 @@ init params =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    MorePlease ->
-      -- (model, getRandomGif model.topic)
-      (model, Cmd.none)
-
-    -- FetchSucceed newUrl ->
-    --   -- (Model model.topic newUrl, Cmd.none)
-    --   (model, Cmd.none)
-
-    BootstrapFetchSucceed data ->
+    AppDataFetchSucceed data ->
       -- (Model model.topic newUrl, Cmd.none)
       ({ model | tasks = data }, Cmd.none)
 
