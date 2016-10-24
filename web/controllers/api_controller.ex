@@ -29,16 +29,4 @@ defmodule EfSupport.APIController do
         render(conn, "error.json", changeset: changeset)
     end
   end
-
-  def update_task(conn, %{"id" => id, "task_data" => task_params}) do
-    {:ok, task_params} = Poison.decode(task_params)
-    task = Repo.get!(Task, id)
-    changeset = Task.changeset(task, task_params)
-    case Repo.update(changeset) do
-      {:ok, task} ->
-        render(conn, "update_task.json", task: task)
-      {:error, changeset} ->
-        render(conn, "error.json", changeset: changeset)
-    end
-  end
 end

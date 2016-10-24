@@ -5,7 +5,6 @@ module Model exposing (..)
 type alias Params =
     { appInitUrl : String
     , createTaskUrl :   String
-    , updateTaskUrl :   String
     , csrfToken :       String
     }
 
@@ -23,7 +22,6 @@ type alias Model =
 initialModel =
   { params = { appInitUrl = ""
              , createTaskUrl = ""
-             , updateTaskUrl = ""
              , csrfToken = ""
              }
   , tasks  = []
