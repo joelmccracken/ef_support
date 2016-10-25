@@ -4,8 +4,8 @@ defmodule EfSupport.Task do
   schema "tasks" do
     field :name, :string
     field :complete, :integer
+    belongs_to :user, EfSupport.User
 
-    belongs_to :user, HelloPhoenix.User
     timestamps()
   end
 

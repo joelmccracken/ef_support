@@ -39,7 +39,9 @@ defmodule EfSupport.Mixfile do
      {:gettext, "~> 0.11"},
      {:addict, "~> 0.3"},
      {:poison, "~> 2.1", override: true},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:ja_serializer, "~> 0.11.1"}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
