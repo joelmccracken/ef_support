@@ -12,6 +12,9 @@ defmodule EfSupport.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug :fetch_session
+    plug :protect_from_forgery
   end
 
   scope "/", EfSupport do
@@ -22,10 +25,17 @@ defmodule EfSupport.Router do
 
     resources "/open_loops", OpenLoopController
 
+  end
+
+
+  scope "/api", EfSupport do
+    pipe_through :api
+
     get "/api/app_init", APIController, :app_init
     post "/api/create_task", APIController, :create_task
 
     resources "/api/tasks", API.TaskController, except: [:new, :edit]
+    # resources "/api/tasks", API.TaskController, except: [:new, :edit]
     # post "/api/update_tasks", API.TaskController, :update_tasks
   end
 

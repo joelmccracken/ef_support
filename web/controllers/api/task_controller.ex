@@ -2,44 +2,47 @@ defmodule EfSupport.API.TaskController do
   use EfSupport.Web, :controller
 
   alias EfSupport.Task
+  alias JaSerializer.Params
+
+  plug :scrub_params, "data" when action in [:create, :update]
 
   def index(conn, _params) do
     tasks = Repo.all(Task)
-    render(conn, "index.json", tasks: tasks)
+    render(conn, "index.json-api", data: tasks)
   end
 
-  def create(conn, %{"task" => task_params}) do
-    changeset = Task.changeset(%Task{}, task_params)
+  def create(conn, %{"data" => data = %{"type" => "task", "attributes" => _task_params}}) do
+    changeset = Task.changeset(%Task{}, Params.to_attributes(data))
 
     case Repo.insert(changeset) do
       {:ok, task} ->
         conn
         |> put_status(:created)
         |> put_resp_header("location", task_path(conn, :show, task))
-        |> render("show.json", task: task)
+        |> render("show.json-api", data: task)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(EfSupport.ChangesetView, "error.json", changeset: changeset)
+        |> render("errors.json-api", data: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
     task = Repo.get!(Task, id)
-    render(conn, "show.json", task: task)
+    render(conn, "show.json-api", data: task)
   end
 
-  def update(conn, %{"id" => id, "task" => task_params}) do
+  def update(conn, %{"id" => id, "data" => data = %{"type" => "task", "attributes" => _task_params}}) do
     task = Repo.get!(Task, id)
-    changeset = Task.changeset(task, task_params)
+    changeset = Task.changeset(task, Params.to_attributes(data))
 
     case Repo.update(changeset) do
       {:ok, task} ->
-        render(conn, "show.json", task: task)
+        render(conn, "show.json-api", data: task)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(EfSupport.ChangesetView, "error.json", changeset: changeset)
+        |> render("errors.json-api", data: changeset)
     end
   end
 
