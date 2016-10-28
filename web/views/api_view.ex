@@ -17,7 +17,7 @@ defmodule EfSupport.APIView do
     %{data: %{task: render_task(task)}}
   end
 
-  def render("error.json", %{changeset: changeset}) do
+  def render("error.json", %{changeset: _changeset}) do
     %{error: "there was an error"}
   end
 

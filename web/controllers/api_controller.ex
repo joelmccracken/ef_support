@@ -1,7 +1,7 @@
 defmodule EfSupport.APIController do
   use EfSupport.Web, :controller
 
-  alias EfSupport.{Task,User}
+  alias EfSupport.Task
 
   plug Addict.Plugs.Authenticated
 
