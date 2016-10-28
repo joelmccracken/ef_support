@@ -1,4 +1,4 @@
-defmodule EfSupport.Repo.Migrations.AddMissingInfoToTasks do
+defmodule EFSupport.Repo.Migrations.AddMissingInfoToTasks do
   use Ecto.Migration
 
   def change do

@@ -1,5 +1,5 @@
-defmodule EfSupport.PageControllerTest do
-  use EfSupport.ConnCase
+defmodule EFSupport.PageControllerTest do
+  use EFSupport.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

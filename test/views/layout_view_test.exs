@@ -1,3 +1,3 @@
-defmodule EfSupport.LayoutViewTest do
-  use EfSupport.ConnCase, async: true
+defmodule EFSupport.LayoutViewTest do
+  use EFSupport.ConnCase, async: true
 end

@@ -1,11 +1,9 @@
-defmodule EfSupport.APIController do
-  use EfSupport.Web, :controller
+defmodule EFSupport.APIController do
+  use EFSupport.Web, :controller
 
-  alias EfSupport.Task
+  alias EFSupport.Task
 
   plug Addict.Plugs.Authenticated
-
-  require IEx
 
   def app_init(conn, _params) do
     user_id = current_user(conn).id

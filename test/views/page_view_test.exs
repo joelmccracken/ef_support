@@ -1,3 +1,3 @@
-defmodule EfSupport.PageViewTest do
-  use EfSupport.ConnCase, async: true
+defmodule EFSupport.PageViewTest do
+  use EFSupport.ConnCase, async: true
 end

@@ -1,4 +1,4 @@
-defmodule EfSupport.Mixfile do
+defmodule EFSupport.Mixfile do
   use Mix.Project
 
   def project do
@@ -17,7 +17,7 @@ defmodule EfSupport.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {EfSupport, []},
+    [mod: {EFSupport, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex]]
   end

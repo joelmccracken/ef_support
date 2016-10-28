@@ -1,7 +1,7 @@
-defmodule EfSupport.OpenLoopTest do
-  use EfSupport.ModelCase
+defmodule EFSupport.OpenLoopTest do
+  use EFSupport.ModelCase
 
-  alias EfSupport.OpenLoop
+  alias EFSupport.OpenLoop
 
   @valid_attrs %{complete: 42, name: "some content"}
   @invalid_attrs %{}

@@ -1,7 +1,7 @@
-defmodule EfSupport.TaskTest do
-  use EfSupport.ModelCase
+defmodule EFSupport.TaskTest do
+  use EFSupport.ModelCase
 
-  alias EfSupport.Task
+  alias EFSupport.Task
 
   @valid_attrs %{complete: 42, name: "some content"}
   @invalid_attrs %{}

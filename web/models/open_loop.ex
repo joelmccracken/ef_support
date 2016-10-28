@@ -1,10 +1,10 @@
-defmodule EfSupport.OpenLoop do
-  use EfSupport.Web, :model
+defmodule EFSupport.OpenLoop do
+  use EFSupport.Web, :model
 
   schema "open_loops" do
     field :name, :string
     field :complete, :integer
-    belongs_to :user, EfSupport.User
+    belongs_to :user, EFSupport.User
 
     timestamps()
   end

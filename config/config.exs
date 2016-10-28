@@ -7,14 +7,14 @@ use Mix.Config
 
 # General application configuration
 config :ef_support,
-  ecto_repos: [EfSupport.Repo]
+  ecto_repos: [EFSupport.Repo]
 
 # Configures the endpoint
-config :ef_support, EfSupport.Endpoint,
+config :ef_support, EFSupport.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "nfkmVqb18bxQH3cPIHhWFf8mtmizql6ec17X8r14LLInL4LgO9lttFKG3L3G2Nd7",
-  render_errors: [view: EfSupport.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: EfSupport.PubSub,
+  render_errors: [view: EFSupport.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: EFSupport.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 config :phoenix, :format_encoders,
@@ -36,8 +36,8 @@ import_config "#{Mix.env}.exs"
 config :addict,
   secret_key: System.get_env("ADDICT_SECRET_KEY"),
   extra_validation: fn ({valid, errors}, user_params) -> {valid, errors} end, # define extra validation here
-  user_schema: EfSupport.User,
-  repo: EfSupport.Repo,
+  user_schema: EFSupport.User,
+  repo: EFSupport.Repo,
   from_email: "somedude@somewebsite.com",
   mailgun_domain: System.get_env("MAILGUN_DOMAIN"),
   mailgun_key: System.get_env("MAILGUN_API_KEY"),

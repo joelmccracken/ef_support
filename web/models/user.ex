@@ -1,11 +1,11 @@
-defmodule EfSupport.User do
-  use EfSupport.Web, :model
+defmodule EFSupport.User do
+  use EFSupport.Web, :model
 
   schema "users" do
     field :email, :string
     field :encrypted_password, :string
 
-    has_many :tasks, EfSupport.Task
+    has_many :tasks, EFSupport.Task
     timestamps()
   end
 

@@ -1,5 +1,5 @@
-defmodule EfSupport.Router do
-  use EfSupport.Web, :router
+defmodule EFSupport.Router do
+  use EFSupport.Web, :router
   use Addict.RoutesHelper
 
   pipeline :browser do
@@ -17,7 +17,7 @@ defmodule EfSupport.Router do
     plug :protect_from_forgery
   end
 
-  scope "/", EfSupport do
+  scope "/", EFSupport do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
@@ -28,7 +28,7 @@ defmodule EfSupport.Router do
   end
 
 
-  scope "/api", EfSupport do
+  scope "/api", EFSupport do
     pipe_through :api
 
     get "/api/app_init", APIController, :app_init
@@ -44,7 +44,7 @@ defmodule EfSupport.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", EfSupport do
+  # scope "/api", EFSupport do
   #   pipe_through :api
   # end
 end

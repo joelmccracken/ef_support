@@ -1,7 +1,7 @@
-defmodule EfSupport.UserHelpers do
+defmodule EFSupport.UserHelpers do
   def current_user(conn) do
     Map.merge(
-      %EfSupport.User{},
+      %EFSupport.User{},
       Addict.Helper.current_user(conn)
     )
   end

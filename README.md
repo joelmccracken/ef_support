@@ -1,4 +1,4 @@
-# EfSupport
+# EFSupport
 
 To start your Phoenix app:
 

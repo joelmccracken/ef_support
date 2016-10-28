@@ -1,7 +1,7 @@
-defmodule EfSupport.OpenLoopController do
-  use EfSupport.Web, :controller
+defmodule EFSupport.OpenLoopController do
+  use EFSupport.Web, :controller
 
-  alias EfSupport.OpenLoop
+  alias EFSupport.OpenLoop
 
   def index(conn, _params) do
     open_loops = Repo.all(OpenLoop)

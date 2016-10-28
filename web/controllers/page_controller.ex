@@ -1,5 +1,5 @@
-defmodule EfSupport.PageController do
-  use EfSupport.Web, :controller
+defmodule EFSupport.PageController do
+  use EFSupport.Web, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

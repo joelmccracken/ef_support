@@ -1,4 +1,4 @@
-defmodule EfSupport.Repo.Migrations.CreateOpenLoop do
+defmodule EFSupport.Repo.Migrations.CreateOpenLoop do
   use Ecto.Migration
 
   def change do

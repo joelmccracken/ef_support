@@ -1,12 +1,12 @@
-defmodule EfSupport.Web do
+defmodule EFSupport.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use EfSupport.Web, :controller
-      use EfSupport.Web, :view
+      use EFSupport.Web, :controller
+      use EFSupport.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,13 +30,13 @@ defmodule EfSupport.Web do
     quote do
       use Phoenix.Controller
 
-      alias EfSupport.Repo
+      alias EFSupport.Repo
       import Ecto
       import Ecto.Query
 
-      import EfSupport.Router.Helpers
-      import EfSupport.UserHelpers
-      import EfSupport.Gettext
+      import EFSupport.Router.Helpers
+      import EFSupport.UserHelpers
+      import EFSupport.Gettext
 
     end
   end
@@ -51,10 +51,10 @@ defmodule EfSupport.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import EfSupport.Router.Helpers
-      import EfSupport.ErrorHelpers
-      import EfSupport.Gettext
-      import EfSupport.UserHelpers
+      import EFSupport.Router.Helpers
+      import EFSupport.ErrorHelpers
+      import EFSupport.Gettext
+      import EFSupport.UserHelpers
     end
   end
 
@@ -68,10 +68,10 @@ defmodule EfSupport.Web do
     quote do
       use Phoenix.Channel
 
-      alias EfSupport.Repo
+      alias EFSupport.Repo
       import Ecto
       import Ecto.Query
-      import EfSupport.Gettext
+      import EFSupport.Gettext
     end
   end
 

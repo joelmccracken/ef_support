@@ -1,5 +1,5 @@
-defmodule EfSupport.APIView do
-  use EfSupport.Web, :view
+defmodule EFSupport.APIView do
+  use EFSupport.Web, :view
 
   require IEx
 

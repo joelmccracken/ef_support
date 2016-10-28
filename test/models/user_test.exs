@@ -1,7 +1,7 @@
-defmodule EfSupport.UserTest do
-  use EfSupport.ModelCase
+defmodule EFSupport.UserTest do
+  use EFSupport.ModelCase
 
-  alias EfSupport.User
+  alias EFSupport.User
 
   @valid_attrs %{email: "some content", encrypted_password: "some content"}
   @invalid_attrs %{}

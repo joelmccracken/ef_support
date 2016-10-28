@@ -1,4 +1,4 @@
-defmodule EfSupport.Repo.Migrations.CreateTask do
+defmodule EFSupport.Repo.Migrations.CreateTask do
   use Ecto.Migration
 
   def change do

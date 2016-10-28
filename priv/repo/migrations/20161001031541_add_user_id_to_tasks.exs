@@ -1,4 +1,4 @@
-defmodule EfSupport.Repo.Migrations.AddUserIdToTasks do
+defmodule EFSupport.Repo.Migrations.AddUserIdToTasks do
   use Ecto.Migration
 
   def change do

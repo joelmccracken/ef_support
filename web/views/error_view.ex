@@ -1,5 +1,5 @@
-defmodule EfSupport.ErrorView do
-  use EfSupport.Web, :view
+defmodule EFSupport.ErrorView do
+  use EFSupport.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

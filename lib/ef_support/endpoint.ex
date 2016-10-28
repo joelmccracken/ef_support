@@ -1,7 +1,7 @@
-defmodule EfSupport.Endpoint do
+defmodule EFSupport.Endpoint do
   use Phoenix.Endpoint, otp_app: :ef_support
 
-  socket "/socket", EfSupport.UserSocket
+  socket "/socket", EFSupport.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,5 +38,5 @@ defmodule EfSupport.Endpoint do
     key: "_ef_support_key",
     signing_salt: "18Pk9uEy"
 
-  plug EfSupport.Router
+  plug EFSupport.Router
 end

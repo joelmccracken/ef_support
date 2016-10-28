@@ -1,11 +1,11 @@
-defmodule EfSupport.ChangesetView do
-  use EfSupport.Web, :view
+defmodule EFSupport.ChangesetView do
+  use EFSupport.Web, :view
 
   @doc """
   Traverses and translates changeset errors.
 
   See `Ecto.Changeset.traverse_errors/2` and
-  `EfSupport.ErrorHelpers.translate_error/1` for more details.
+  `EFSupport.ErrorHelpers.translate_error/1` for more details.
   """
   def translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)

@@ -1,8 +1,8 @@
-defmodule EfSupport.TaskControllerTest do
-  use EfSupport.ConnCase
+defmodule EFSupport.TaskControllerTest do
+  use EFSupport.ConnCase
 
-  alias EfSupport.Task
-  alias EfSupport.Repo
+  alias EFSupport.Task
+  alias EFSupport.Repo
 
   @valid_attrs %{complete: 42, name: "some content"}
   @invalid_attrs %{}
@@ -17,10 +17,9 @@ defmodule EfSupport.TaskControllerTest do
   end
 
   defp relationships do
-    user = Repo.insert!(%EfSupport.User{})
+    user = Repo.insert!(%EFSupport.User{})
 
-    %{
-      "user" => %{
+    %{"user" => %{
         "data" => %{
           "type" => "user",
           "id" => user.id

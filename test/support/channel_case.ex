@@ -1,4 +1,4 @@
-defmodule EfSupport.ChannelCase do
+defmodule EFSupport.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule EfSupport.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias EfSupport.Repo
+      alias EFSupport.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint EfSupport.Endpoint
+      @endpoint EFSupport.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EfSupport.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EFSupport.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(EfSupport.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(EFSupport.Repo, {:shared, self()})
     end
 
     :ok

@@ -1,4 +1,4 @@
-defmodule EfSupport.ErrorHelpers do
+defmodule EFSupport.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule EfSupport.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(EfSupport.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(EFSupport.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(EfSupport.Gettext, "errors", msg, opts)
+      Gettext.dgettext(EFSupport.Gettext, "errors", msg, opts)
     end
   end
 end

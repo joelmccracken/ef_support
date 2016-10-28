@@ -1,10 +1,10 @@
-defmodule EfSupport.Task do
-  use EfSupport.Web, :model
+defmodule EFSupport.Task do
+  use EFSupport.Web, :model
 
   schema "tasks" do
     field :name, :string
     field :complete, :integer
-    belongs_to :user, EfSupport.User
+    belongs_to :user, EFSupport.User
 
     timestamps()
   end

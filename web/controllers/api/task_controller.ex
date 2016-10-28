@@ -1,7 +1,7 @@
-defmodule EfSupport.API.TaskController do
-  use EfSupport.Web, :controller
+defmodule EFSupport.API.TaskController do
+  use EFSupport.Web, :controller
 
-  alias EfSupport.Task
+  alias EFSupport.Task
   alias JaSerializer.Params
 
   plug :scrub_params, "data" when action in [:create, :update]

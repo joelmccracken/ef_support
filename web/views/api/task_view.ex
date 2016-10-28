@@ -1,5 +1,5 @@
-defmodule EfSupport.API.TaskView do
-  use EfSupport.Web, :view
+defmodule EFSupport.API.TaskView do
+  use EFSupport.Web, :view
   use JaSerializer.PhoenixView
 
   attributes [:name, :complete, :inserted_at, :updated_at]
