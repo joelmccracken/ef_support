@@ -26,7 +26,8 @@ defmodule EFSupport.APIView do
     %{
       name: task.name,
       id: task.id,
-      complete: task.complete
+      complete: task.complete,
+      user_id: task.user_id
     }
   end
 end
