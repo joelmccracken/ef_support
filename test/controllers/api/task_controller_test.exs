@@ -16,7 +16,7 @@ defmodule EFSupport.TaskControllerTest do
   end
 
   defp relationships do
-    user = Repo.insert!(%EFSupport.User{})
+    user = Repo.insert!(%EFSupport.User{ email: "user@example.com", encrypted_password: "sogood" })
 
     %{"user" => %{
         "data" => %{

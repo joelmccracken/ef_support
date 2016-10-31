@@ -8,6 +8,11 @@ defmodule EFSupport.APIControllerTest do
 
   describe "the bootstrap method" do
     setup %{conn: conn} do
+
+      conn = conn
+        |> put_req_header("accept", "application/vnd.api+json")
+        |> put_req_header("content-type", "application/vnd.api+json")
+
       %User{
         id: 1,
         email: "abc@gmail.com",
@@ -20,7 +25,6 @@ defmodule EFSupport.APIControllerTest do
         encrypted_password: Addict.Interactors.GenerateEncryptedPassword.call("password")
       } |> Repo.insert
 
-      conn = put_req_header(conn, "accept", "application/json")
       conn = post(conn, login_path(conn, :login),
         email: "abc@gmail.com",
         password: "password")
