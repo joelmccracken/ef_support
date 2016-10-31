@@ -13,6 +13,9 @@ defmodule EFSupport.Router do
   pipeline :api do
     plug :accepts, ["json", "json-api"]
 
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
+
     plug :fetch_session
     plug :protect_from_forgery
   end

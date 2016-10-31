@@ -13,7 +13,7 @@ config :ef_support,
 config :ef_support, EFSupport.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "nfkmVqb18bxQH3cPIHhWFf8mtmizql6ec17X8r14LLInL4LgO9lttFKG3L3G2Nd7",
-  render_errors: [view: EFSupport.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: EFSupport.ErrorView, accepts: ~w(html json json-api)],
   pubsub: [name: EFSupport.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
