@@ -11,7 +11,7 @@ defmodule EFSupport.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json", "json-api"]
 
     plug :fetch_session
     plug :protect_from_forgery
