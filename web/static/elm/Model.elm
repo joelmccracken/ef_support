@@ -1,4 +1,4 @@
-module Model exposing (..)
+module Model exposing ( .. )
 
 
 
@@ -31,7 +31,19 @@ initialModel =
 
 
 
-type alias Task = { name : String, id : Int, complete : Int}
+type alias Idable = { id : String }
+
+
+
+type alias TaskAttrs = { name : String, complete : Int }
+
+
+
+type alias Task =
+    { id : String
+    , name : String
+    , complete : Int
+    }
 
 
 

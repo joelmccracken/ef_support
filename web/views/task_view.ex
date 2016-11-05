@@ -1,4 +1,4 @@
-defmodule EFSupport.API.TaskView do
+defmodule EFSupport.TaskView do
   use EFSupport.Web, :view
   use JaSerializer.PhoenixView
 
@@ -7,5 +7,4 @@ defmodule EFSupport.API.TaskView do
   has_one :user,
     field: :user_id,
     type: "user"
-
 end

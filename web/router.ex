@@ -37,7 +37,7 @@ defmodule EFSupport.Router do
     get "/api/app_init", APIController, :app_init
     post "/api/create_task", APIController, :create_task
 
-    resources "/api/tasks", API.TaskController, except: [:new, :edit]
+    resources "/api/tasks", TaskController, except: [:new, :edit]
     # resources "/api/tasks", API.TaskController, except: [:new, :edit]
     # post "/api/update_tasks", API.TaskController, :update_tasks
   end

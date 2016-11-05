@@ -41,14 +41,16 @@ update msg model =
     MarkComplete task ->
       let
         completedTask = M.markIndividualTaskComplete task
-        serverCmd = EFHttp.updateTask model.params.csrfToken "FILL ME IN LATER" completedTask
+        -- serverCmd = EFHttp.updateTask model.params.csrfToken "FILL ME IN LATER" completedTask
+        serverCmd = Cmd.none
       in
         (completeTask task model, serverCmd)
 
     MarkIncomplete task ->
       let
         completedTask = M.markIndividualTaskIncomplete task
-        serverCmd = EFHttp.updateTask model.params.csrfToken "FILL ME IN LATER" completedTask
+        -- serverCmd = EFHttp.updateTask model.params.csrfToken "FILL ME IN LATER" completedTask
+        serverCmd = Cmd.none
       in
         (incompleteTask task model, serverCmd)
 
@@ -58,7 +60,8 @@ update msg model =
       let
         newTask = model.newTaskText
         clearedNewTask = { model | newTaskText = "" }
-        createCmd = EFHttp.submitNewTask model.params.createTaskUrl model.params.csrfToken newTask
+        -- createCmd = EFHttp.submitNewTask model.params.createTaskUrl model.params.csrfToken newTask
+        createCmd = Cmd.none
       in
         (clearedNewTask, createCmd)
 

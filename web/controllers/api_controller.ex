@@ -4,12 +4,11 @@ defmodule EFSupport.APIController do
   alias EFSupport.Task
 
   plug Addict.Plugs.Authenticated
-
   def app_init(conn, _params) do
     user_id = current_user(conn).id
     tasks = Task |> where(user_id: ^user_id) |> Repo.all
 
-    render conn, "app_init.json", tasks: tasks
+    render conn, "app_init.json-api", tasks: tasks
   end
 
   def create_task(conn, %{"name" => task_name}) do

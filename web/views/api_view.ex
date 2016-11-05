@@ -3,10 +3,10 @@ defmodule EFSupport.APIView do
 
   require IEx
 
-  def render("app_init.json", %{tasks: tasks}) do
-    tasks = Enum.map(tasks, &render_task/1)
+  def render("app_init.json-api", %{tasks: tasks, conn: conn}) do
+    tasks1 = Enum.map(tasks, &render_task/1)
 
-    %{data: %{tasks: tasks}}
+    JaSerializer.format(EFSupport.TaskView, tasks, conn)
   end
 
   def render("create_task.json", %{task: task}) do

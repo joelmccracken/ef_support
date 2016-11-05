@@ -1,4 +1,4 @@
-defmodule EFSupport.API.TaskController do
+defmodule EFSupport.TaskController do
   use EFSupport.Web, :controller
 
   alias EFSupport.Task
