@@ -3,31 +3,24 @@ defmodule EFSupport.APIView do
 
   require IEx
 
+  defmodule ApiSerializer do
+    use JaSerializer
+
+    location "api/app_init"
+
+    has_many :tasks,
+      serializer: EFSupport.TaskView,
+      include: true,
+      links: [
+        root: "api/tasks"
+      ]
+  end
+
   def render("app_init.json-api", %{tasks: tasks, conn: conn}) do
-    tasks1 = Enum.map(tasks, &render_task/1)
-
-    JaSerializer.format(EFSupport.TaskView, tasks, conn)
-  end
-
-  def render("create_task.json", %{task: task}) do
-    %{data: %{task: render_task(task)}}
-  end
-
-  def render("update_task.json", %{task: task}) do
-    %{data: %{task: render_task(task)}}
+    JaSerializer.format(ApiSerializer, %{tasks: tasks})
   end
 
   def render("error.json", %{changeset: _changeset}) do
     %{error: "there was an error"}
-  end
-
-
-  defp render_task(task) do
-    %{
-      name: task.name,
-      id: task.id,
-      complete: task.complete,
-      user_id: task.user_id
-    }
   end
 end
