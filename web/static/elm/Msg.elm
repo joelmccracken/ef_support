@@ -1,10 +1,10 @@
 module Msg exposing (..)
 
-import Model exposing (Task)
+import Model exposing (Task, AppInitData)
 import Http
 
 type Msg
-  = AppDataFetchSucceed (List Task)
+  = AppDataFetchSucceed AppInitData
   | TaskCreated Task
   | TaskUpdated Task
   | FetchFail Http.Error

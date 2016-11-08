@@ -23,7 +23,7 @@ main =
 
 init : Params -> (AppState, Cmd Msg)
 init params =
-  (AppState params [] "" "", EFHttp.fetchAppInit params.appInitUrl)
+  ( AppState params "" [] "" "", EFHttp.fetchAppInit params.appInitUrl )
 
 
 
@@ -32,8 +32,8 @@ init params =
 update : Msg -> AppState -> (AppState, Cmd Msg)
 update msg model =
   case msg of
-    AppDataFetchSucceed data ->
-      ({ model | tasks = data }, Cmd.none)
+    AppDataFetchSucceed appInitData ->
+      ({ model | tasks = appInitData.tasks, createTaskUrl = appInitData.createTaskUrl}, Cmd.none)
 
     FetchFail x ->
       ({ model | output = Debug.log "fail" (toString x)}, Cmd.none)

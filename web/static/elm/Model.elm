@@ -1,17 +1,18 @@
 module Model exposing ( .. )
 
+import JsonApi exposing (Document)
 
 
 type alias Params =
     { appInitUrl : String
-    , createTaskUrl :   String
-    , csrfToken :       String
+    , csrfToken  : String
     }
 
 
 
 type alias AppState =
   { params :      Params
+  , createTaskUrl : String
   , tasks :       List Task
   , output :      String
   , newTaskText : String
@@ -19,15 +20,10 @@ type alias AppState =
 
 
 
-initialAppState =
-  { params = { appInitUrl = ""
-             , createTaskUrl = ""
-             , csrfToken = ""
-             }
-  , tasks  = []
-  , output = ""
-  , newTaskText = ""
-  }
+type alias AppInitData =
+   { createTaskUrl : String
+   , tasks : List Task
+   }
 
 
 

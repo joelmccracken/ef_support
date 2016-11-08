@@ -5,7 +5,7 @@ import Json.Decode as JSD
 import Json.Decode exposing ((:=))
 import Json.Encode as JSE
 import Task
-import Model exposing (Task, AppState, Idable, TaskAttrs)
+import Model exposing (Task, AppState, Idable, TaskAttrs, AppInitData)
 import Msg exposing (Msg(..))
 
 import JsonApi.Resources
@@ -56,30 +56,32 @@ fetchAppInit : String -> Cmd Msg
 fetchAppInit url =
   ( Task.andThen
     ( JsonApi.Http.getDocument url )
-    ( Task.fromResult << docToTasks ) )
+    ( Task.fromResult << parseAppInit ) )
   |> (Task.perform FetchFail AppDataFetchSucceed)
 
 
 
-docToTasks : JsonApi.Document -> Result Http.Error ( List Task )
-docToTasks doc =
+parseAppInit : JsonApi.Document -> Result Http.Error AppInitData
+parseAppInit doc =
   let
-    apiPrimaryResource : Result String JsonApi.Resource
     apiPrimaryResource = JsonApi.Documents.primaryResource doc
-    tasksResources = apiPrimaryResource
-      -|> JsonApi.Resources.relatedResourceCollection "tasks"
-    taskLinks = apiPrimaryResource
+    allTaskLinks = apiPrimaryResource
       -|> (JsonApi.Resources.relatedLinks "tasks")
-    res = tasksResources
+    taskCollectionLink =
+      allTaskLinks -|> \atl-> Result.fromMaybe "API result did not include task collection link" atl.self
+    tasksData = apiPrimaryResource
+      -|> JsonApi.Resources.relatedResourceCollection "tasks"
       -|> (Ok << decodeTasks)
-      -- error needs to be an http error
-      |> Result.formatError Http.UnexpectedPayload
   in
-    res
+    Result.map2
+      AppInitData
+      taskCollectionLink
+      tasksData
+    |> Result.formatError Http.UnexpectedPayload
 
-
-
-
+-- infix wrapper for Result.andThen
+-- (shrug) it works and is prettier.
+-- Cause bacticks are going away in 18??
 (-|>) : Result e a -> (a -> Result e b) -> Result e b
 (-|>) a b = Result.andThen a b
 
