@@ -10,7 +10,7 @@ type alias Params =
 
 
 
-type alias Model =
+type alias AppState =
   { params :      Params
   , tasks :       List Task
   , output :      String
@@ -19,7 +19,7 @@ type alias Model =
 
 
 
-initialModel =
+initialAppState =
   { params = { appInitUrl = ""
              , createTaskUrl = ""
              , csrfToken = ""
@@ -59,19 +59,19 @@ markIndividualTaskIncomplete task =
 
 
 
-completeTask : Task -> Model -> Model
+completeTask : Task -> AppState -> AppState
 completeTask task model =
   updateTask task model markIndividualTaskComplete
 
 
 
-incompleteTask : Task -> Model -> Model
+incompleteTask : Task -> AppState -> AppState
 incompleteTask task model =
   updateTask task model markIndividualTaskIncomplete
 
 
 
-updateTask : Task -> Model -> (Task -> Task) -> Model
+updateTask : Task -> AppState -> (Task -> Task) -> AppState
 updateTask task model updater =
   let
     tasks = (List.map (\t-> if task == t then (updater t) else t)

@@ -5,7 +5,7 @@ import Json.Decode as JSD
 import Json.Decode exposing ((:=))
 import Json.Encode as JSE
 import Task
-import Model exposing (Task, Model, Idable, TaskAttrs)
+import Model exposing (Task, AppState, Idable, TaskAttrs)
 import Msg exposing (Msg(..))
 
 import JsonApi.Resources
@@ -64,17 +64,29 @@ fetchAppInit url =
 docToTasks : JsonApi.Document -> Result Http.Error ( List Task )
 docToTasks doc =
   let
-    taskExtractor = JsonApi.Documents.primaryResourceCollection doc
-    taskDecoder = Ok << decodeTasks
-    formatter error = Http.UnexpectedPayload error
+    apiPrimaryResource : Result String JsonApi.Resource
+    apiPrimaryResource = JsonApi.Documents.primaryResource doc
+    tasksResources = apiPrimaryResource
+      -|> JsonApi.Resources.relatedResourceCollection "tasks"
+    taskLinks = apiPrimaryResource
+      -|> (JsonApi.Resources.relatedLinks "tasks")
+    res = tasksResources
+      -|> (Ok << decodeTasks)
+      -- error needs to be an http error
+      |> Result.formatError Http.UnexpectedPayload
   in
-    Result.andThen taskExtractor taskDecoder
-      |> Result.formatError formatter
+    res
+
+
+
+
+(-|>) : Result e a -> (a -> Result e b) -> Result e b
+(-|>) a b = Result.andThen a b
 
 
 
 decodeTasks : (List JsonApi.Resource) -> (List Task)
-decodeTasks = List.filterMap <| (decodeTask )
+decodeTasks = List.filterMap <| decodeTask
 
 
 
@@ -86,11 +98,14 @@ decodeTask resource =
   |> Result.toMaybe
 
 
+
 setResourceIDOn : JsonApi.Resource -> Model.TaskAttrs -> Model.Task
 setResourceIDOn resource taskAttrs =
   { id = JsonApi.Resources.id resource
   , name = taskAttrs.name
   , complete = taskAttrs.complete }
+
+
 
 decodeTaskAttrs : JSD.Decoder Model.TaskAttrs
 decodeTaskAttrs =

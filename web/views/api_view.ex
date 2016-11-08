@@ -12,7 +12,7 @@ defmodule EFSupport.APIView do
       serializer: EFSupport.TaskView,
       include: true,
       links: [
-        root: "api/tasks"
+        self: "api/tasks/:id"
       ]
   end
 

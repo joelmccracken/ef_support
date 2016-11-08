@@ -7,4 +7,6 @@ defmodule EFSupport.TaskView do
   has_one :user,
     field: :user_id,
     type: "user"
+
+  location "api/tasks/:id"
 end

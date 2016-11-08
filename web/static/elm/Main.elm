@@ -5,7 +5,7 @@ import Html.Events exposing (..)
 import Debug
 import EFHttp as EFHttp
 import Msg exposing (Msg(..))
-import Model exposing (Model, Task, incompleteTask, completeTask, Params)
+import Model exposing (AppState, Task, incompleteTask, completeTask, Params)
 import Model as M
 
 
@@ -21,15 +21,15 @@ main =
 
 
 
-init : Params -> (Model, Cmd Msg)
+init : Params -> (AppState, Cmd Msg)
 init params =
-  (Model params [] "" "", EFHttp.fetchAppInit params.appInitUrl)
+  (AppState params [] "" "", EFHttp.fetchAppInit params.appInitUrl)
 
 
 
 -- UPDATE
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> AppState -> (AppState, Cmd Msg)
 update msg model =
   case msg of
     AppDataFetchSucceed data ->
@@ -87,7 +87,7 @@ replaceExistingTask task existingTasks =
 
 -- VIEW
 
-view : Model -> Html Msg
+view : AppState -> Html Msg
 view model =
   let
     complete   = List.filter isMarkComplete model.tasks
@@ -123,6 +123,6 @@ buttonsForTask task =
 
 -- SUBSCRIPTIONS
 
-subscriptions : Model -> Sub Msg
+subscriptions : AppState -> Sub Msg
 subscriptions model =
   Sub.none
