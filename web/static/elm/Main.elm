@@ -56,11 +56,11 @@ update msg model =
 
     UpdateNewTask str -> ({ model | newTaskText = str }, Cmd.none)
 
-    AcceptNewTask ->
+    CreateNewTask ->
       let
         newTask = model.newTaskText
         clearedNewTask = { model | newTaskText = "" }
-        -- createCmd = EFHttp.submitNewTask model.params.createTaskUrl model.params.csrfToken newTask
+        -- createCmd = EFHttp.createNewTask model newTask
         createCmd = Cmd.none
       in
         (clearedNewTask, createCmd)
@@ -70,6 +70,7 @@ update msg model =
 
     TaskUpdated task ->
       ({ model | tasks = replaceExistingTask task model.tasks }, Cmd.none)
+
 
 
 isMarkComplete : Task -> Bool
@@ -94,7 +95,7 @@ view model =
     incomplete = List.filter (not << isMarkComplete) model.tasks
   in div []
     [ input [ onInput UpdateNewTask, value model.newTaskText ] [ ]
-    , button [ onClick AcceptNewTask ] [ text "Accept" ]
+    , button [ onClick CreateNewTask ] [ text "Accept" ]
     , h2 [] [ text "incomplete"]
     , ul [] <| List.map viewTask incomplete
     , h2 [] [ text "complete"]

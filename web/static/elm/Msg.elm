@@ -11,4 +11,4 @@ type Msg
   | MarkComplete Task
   | MarkIncomplete Task
   | UpdateNewTask String
-  | AcceptNewTask
+  | CreateNewTask
