@@ -51,6 +51,15 @@ import JsonApi.Http
 --     )
 
 
+-- createNewTask : AppState -> String -> Cmd Msg
+-- createNewTask appState name =
+--   let createUrl =
+--         case appState.appInitData of
+--           Nothing -> Debug.crash "not initialized yet (fixme should not be able to submit yet)"
+--           Just appInitData -> appInitData.createTaskUrl
+--   in
+
+
 
 fetchAppInit : String -> Cmd Msg
 fetchAppInit url =
